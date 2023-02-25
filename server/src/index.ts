@@ -6,9 +6,9 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-app.get("/", (req, res) => {
-    res.send("Hello World!")
-
+app.post("/compose", (req, res) => {
+    res.send({ message: "Hello World!" })
+    console.log(req.body.subject, req.body.content)
     // res.json({ message: "Hello World!" })
 })
 
