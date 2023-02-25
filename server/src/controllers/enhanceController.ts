@@ -88,7 +88,7 @@ const enhanceCasual = async (req: Request, res: Response) => {
         const body = req.body
 
         const prompt = `
-        PROMPT: Enhance the content of this email, do not change the subject line.
+        PROMPT: Make this email content more informal and casual sounding.
         SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
 
         console.log("⚡Enhance Casual Prompt 🖊️\n", prompt)
