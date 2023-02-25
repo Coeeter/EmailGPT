@@ -55,7 +55,7 @@
             closeModal(aiComposeModal)
         })
     })
-
+    if (!composeButton) return
     const composeRow = composeButton.parentElement
 
     if (composeRow.querySelector(".gpt-ai-compose")) return
@@ -75,7 +75,7 @@
     })
 
     function closeModal(gptModal: HTMLDialogElement) {
-        gptModal.querySelector("gpt-ai-compose-content").innerHTML = ""
+        gptModal.querySelector(".gpt-ai-compose-content").innerHTML = ""
         gptModal.close()
         aiComposeSaveBtn.removeEventListener("click", generateEmail)
     }
@@ -85,14 +85,23 @@
             '[name="gpt-ai-compose-input"]',
         ) as HTMLTextAreaElement
 
-        setTimeout(() => {
-            const contentInput = document
-                .querySelector(".aoI")
-                .querySelector('div[role="textbox"]') as HTMLDivElement
+        chrome.runtime.sendMessage(
+            {
+                type: "generateEmail",
+                userPrompt: promptInput.value,
+            },
+            response => {
+                const contentInput = document
+                    .querySelector(".aoI")
+                    .querySelector('div[role="textbox"]') as HTMLDivElement
 
-            contentInput.innerHTML = promptInput.value
-        }, 500)
-
-        closeModal(aiComposeModal)
+                closeModal(aiComposeModal)
+                if (response && response?.content) {
+                    contentInput.innerHTML = response.content
+                } else {
+                    alert("Something went wrong. Please try again.")
+                }
+            },
+        )
     }
 })()
