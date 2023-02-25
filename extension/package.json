@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc && copyfiles -f ./public/manifest.json ./dist/"
+    "build": "tsc && copyfiles -f ./public/* ./dist/"
   },
   "keywords": [],
   "author": "",
