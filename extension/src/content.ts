@@ -28,10 +28,10 @@
                     parent = parent.parentElement
                     if (parent.nodeName == "TBODY") break
                 }
-                const text = parent.querySelector(
+                const inputElement = parent.querySelector(
                     'div[role="textbox"]',
-                ).innerHTML
-                console.log(text)
+                ) as HTMLElement
+                console.log(inputElement.innerText)
             })
         })
     }
