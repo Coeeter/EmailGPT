@@ -9,10 +9,11 @@ const enhanceEmail = async (req: Request, res: Response) => {
         PROMPT: Enhance the content of this email, do not change the subject line.
         SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
 
+        console.log("⚡Enhance Email Prompt 🖊️\n", prompt)
+
         const completion = await promptGPT(prompt)
-        res.status(200)
-        res.send({
-            echo: body,
+
+        res.status(200).send({
             content: completion.choices[0].text,
         })
     } catch {
@@ -30,18 +31,82 @@ const enhanceReply = async (req: Request, res: Response) => {
             body.context
         }`
 
-        console.log("⚡Enhance Reply\n", prompt)
+        console.log("⚡Enhance Reply Prompt 🖊️\n", prompt)
 
         const completion = await promptGPT(prompt)
-        res.status(200)
-        res.send({
-            echo: body,
+
+        res.status(200).send({
             content: completion.choices[0].text,
         })
-        console.log(completion)
     } catch {
         res.status(500).send("Error")
     }
 }
 
-export default { enhanceEmail, enhanceReply }
+const enhanceQuirky = async (req: Request, res: Response) => {
+    try {
+        const body = req.body
+
+        const prompt = `
+        PROMPT: Make this email content more quirky with slang.
+        SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
+
+        console.log("⚡Enhance Quirky Prompt 🖊️\n", prompt)
+
+        const completion = await promptGPT(prompt)
+
+        res.status(200).send({
+            content: completion.choices[0].text,
+        })
+    } catch {
+        res.status(500).send("Error")
+    }
+}
+
+const enhanceCorporate = async (req: Request, res: Response) => {
+    try {
+        const body = req.body
+
+        const prompt = `
+        PROMPT: Make the following email content more corporate, do not include the subject line in the completed response.
+        SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
+
+        console.log("⚡Enhance Corporate Prompt 🖊️\n", prompt)
+
+        const completion = await promptGPT(prompt)
+
+        res.status(200).send({
+            content: completion.choices[0].text,
+        })
+    } catch {
+        res.status(500).send("Error")
+    }
+}
+
+const enhanceCasual = async (req: Request, res: Response) => {
+    try {
+        const body = req.body
+
+        const prompt = `
+        PROMPT: Make this email content more informal and casual sounding.
+        SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
+
+        console.log("⚡Enhance Casual Prompt 🖊️\n", prompt)
+
+        const completion = await promptGPT(prompt)
+
+        res.status(200).send({
+            content: completion.choices[0].text,
+        })
+    } catch {
+        res.status(500).send("Error")
+    }
+}
+
+export default {
+    enhanceEmail,
+    enhanceReply,
+    enhanceQuirky,
+    enhanceCorporate,
+    enhanceCasual,
+}

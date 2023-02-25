@@ -14,12 +14,15 @@ const promptGPT = async (prompt: string) => {
         const completion = await openai.createCompletion({
             prompt: prompt,
             model: "text-davinci-003",
-            max_tokens: 200,
+            max_tokens: 300,
             temperature: 0.4,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
         })
+        console.log(
+            `Tokens cost for this request💸\n=== \n💸Prompt Tokens: ${completion.data.usage.prompt_tokens}\n💸Completion Tokens: ${completion.data.usage.completion_tokens}\n💸Total Tokens: ${completion.data.usage.total_tokens}\n===`,
+        )
         return completion.data
     } catch (err) {
         console.log("Error Request ❌", err)

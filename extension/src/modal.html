@@ -16,6 +16,9 @@
                         &times;
                     </button>
                 </div>
+                <div class="indeterminate-progress-bar" id="loading">
+                    <div class="indeterminate-progress-bar__progress"></div>
+                </div>
                 <div class="gpt-modal-body">
                     <div class="gpt-body-item">
                         <label for="gpt-email-input">Original</label>
@@ -37,6 +40,25 @@
                     </div>
                 </div>
                 <div class="gpt-modal-footer">
+                    <select
+                        name="options"
+                        id="options"
+                        class="gpt-email-content"
+                    >
+                        <option value="/enhance-email" selected>Default</option>
+                        <option value="/enhance-quirky">Quirky</option>
+                        <option value="/enhance-corporate">Corporate</option>
+                        <option value="/enhance-casual">Casual</option>
+                    </select>
+                    <div class="gpt-modal-footer-btns">
+                        <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
+                            Cancel
+                        </button>
+                        <button class="gpt-modal-btn gpt-save">Save</button>
+                    </div>
+                </div>
+            </div>
+        </dialog>
                     <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
                         Cancel
                     </button>
