@@ -1,4 +1,52 @@
 ;(() => {
+    let isShown: Boolean = false
+    let contentInput: HTMLElement
+    let output: HTMLTextAreaElement
+    const modal = `
+        <dialog id="gpt-modal">
+            <div class="gpt-modal-content">
+                <div class="gpt-modal-header">
+                    <h2 class="gpt-modal-title">Review your changes</h2>
+                    <button class="gpt-modal-btn" data-gpt-close>
+                        &times;
+                    </button>
+                </div>
+                <div class="gpt-modal-body">
+                    <div class="gpt-body-item">
+						<label for="gpt-email-input">Original</label>	
+						<textarea
+							name="gpt-email-input"
+							class="gpt-email-content"
+							readonly
+							rows="20"
+						></textarea>
+					</div>
+                    <div class="gpt-body-item">
+						<label for="gpt-email-output">✨ Enhanced ✨</label>	
+						<textarea
+							name="gpt-email-output"
+							class="gpt-email-content"
+							rows="20"
+							placeholder="Loading..."
+						></textarea>
+					</div>
+                </div>
+                <div class="gpt-modal-footer">
+                    <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
+                        Cancel
+                    </button>
+                    <button class="gpt-modal-btn gpt-save">Save</button>
+                </div>
+            </div>
+        </dialog>
+    `
+    document.body.insertAdjacentHTML("beforeend", modal)
+    const gptModal = document.getElementById("gpt-modal") as HTMLDialogElement
+    document.querySelectorAll("[data-gpt-close]").forEach(el => {
+        el.addEventListener("click", () => {
+            closeModal(gptModal)
+        })
+    })
     let mutationObserver = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
             if (mutation.type === "childList") {
@@ -28,9 +76,15 @@
                     contentParent = contentParent.parentElement
                     if (contentParent.nodeName == "TBODY") break
                 }
-                const contentInput = contentParent.querySelector(
+                contentInput = contentParent.querySelector(
                     'div[role="textbox"]',
-                ) as HTMLElement
+                )
+                output = document.querySelector(
+                    '[name="gpt-email-output"]',
+                ) as HTMLTextAreaElement
+                document
+                    .querySelector(".gpt-save")
+                    .addEventListener("click", saveEmail)
 
                 let subjectParent = contentInput.parentElement
                 while (true) {
@@ -47,17 +101,42 @@
                     subject: subjectInput.value,
                     content: contentInput.innerText,
                 }
-                console.log(data);
+                console.log(data)
+
+                const input = document.querySelector(
+                    '[name="gpt-email-input"]',
+                ) as HTMLTextAreaElement
+                input.value = data.content
+
+                gptModal.showModal()
+                isShown = true
                 chrome.runtime.sendMessage(data, response => {
                     console.log(response)
                     if (response && response?.content) {
-                        contentInput.innerText = response.content.trim()
+                        if (!isShown) return
+                        output.value = response.content.trim()
                         return
                     }
                     alert("Something went wrong")
                 })
             })
         })
+    }
+
+    function closeModal(gptModal: HTMLDialogElement) {
+        gptModal.close()
+        gptModal.querySelectorAll("textarea").forEach(el => {
+            el.value = ""
+        })
+        isShown = false
+        document
+            .querySelector(".gpt-save")
+            .removeEventListener("click", saveEmail)
+    }
+
+    const saveEmail = () => {
+        contentInput.innerText = output.value.trim()
+        closeModal(gptModal)
     }
 
     mutationObserver.observe(document, { childList: true, subtree: true })
