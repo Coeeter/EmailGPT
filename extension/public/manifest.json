@@ -1,13 +1,11 @@
 {
-  "name": "EmailGPT",
-  "description": "EmailGPT is a extension to auto create emails in the gmail website.",
-  "version": "1.0",
-  "manifest_version": 3,
-  "background": {
-    "service_worker": "background.js"
-  },
-  "permissions": [
-    "tabs",
-    "activeTab"
-  ]
+    "name": "EmailGPT",
+    "description": "EmailGPT is a extension to auto create emails in the gmail website.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["tabs", "activeTab", "scripting"],
+    "host_permissions": ["https://mail.google.com/*"]
 }

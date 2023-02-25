@@ -10,9 +10,11 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 async function checkCurrentTab() {
     const currentTab = await getCurrentTab()
     const url = currentTab.url
-    if (url.includes("mail.google.com")) {
-        console.log(`Gmail tab detected: ${currentTab.id}`)
-    }
+    if (!url.includes("mail.google.com")) return
+    chrome.scripting.executeScript({
+        target: { tabId: currentTab.id, allFrames: true },
+        files: ["content.js"],
+    })
 }
 
 async function getCurrentTab() {
