@@ -1,7 +1,9 @@
 import express from "express"
 import cors from "cors"
 
-import composeController from "./controllers/composeController"
+import enhanceController from "./controllers/enhanceController"
+
+require("dotenv").config()
 
 const app = express()
 app.use(express.json())
@@ -12,7 +14,7 @@ app.get("/", (req, res) => {
     res.send("Hello World!")
 })
 
-app.route("/compose").post(composeController.composeEmail)
+app.route("/enhance-email").post(enhanceController.enhanceEmail)
 
 app.listen(8080, () => {
     console.log("Server started on http://localhost:8080")
