@@ -68,7 +68,7 @@ const enhanceCorporate = async (req: Request, res: Response) => {
         const body = req.body
 
         const prompt = `
-        PROMPT: Enhance the content of this email, do not change the subject line.
+        PROMPT: Make the following email content more corporate, do not include the subject line in the completed response.
         SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
 
         console.log("⚡Enhance Corporate Prompt 🖊️\n", prompt)
@@ -76,7 +76,6 @@ const enhanceCorporate = async (req: Request, res: Response) => {
         const completion = await promptGPT(prompt)
 
         res.status(200).send({
-            echo: body,
             content: completion.choices[0].text,
         })
     } catch {
@@ -97,7 +96,6 @@ const enhanceCasual = async (req: Request, res: Response) => {
         const completion = await promptGPT(prompt)
 
         res.status(200).send({
-            echo: body,
             content: completion.choices[0].text,
         })
     } catch {
