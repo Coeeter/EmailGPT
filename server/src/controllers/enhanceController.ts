@@ -6,7 +6,7 @@ const enhanceEmail = async (req: Request, res: Response) => {
         const body = req.body
 
         const prompt = `
-        PROMPT: Enhance the content of this email.
+        PROMPT: Enhance the content of this email, do not change the subject line.
         SUBJECT: ${body.subject || ""} CONTENT: ${body.content}`
 
         const completion = await promptGPT(prompt)
@@ -25,7 +25,7 @@ const enhanceReply = async (req: Request, res: Response) => {
         const body = req.body
 
         const prompt = `
-        PROMPT: Enhance the content of this email reply based on the context of the parent email.
+        PROMPT: Enhance the content of this email reply based on the context of the parent email, do not change the subject line.
         SUBJECT: ${body.subject || ""} CONTENT: ${body.content} CONTEXT: ${
             body.context
         }`

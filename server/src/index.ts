@@ -16,6 +16,5 @@ app.route("/enhance-reply").post(enhanceController.enhanceReply)
 
 const port = 8080
 app.listen(process.env.PORT || port, () =>
-      console.log(`Web server running @ http://localhost:${port}`),
+    console.log(`Express server running @ http://localhost:${port}`),
 )
-
