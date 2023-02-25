@@ -32,8 +32,8 @@ dialog[open] {
 }
 
 .gpt-modal-content {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .gpt-modal-header {
@@ -90,6 +90,13 @@ label {
     border: 1px solid #e0e0e0;
 }
 
+.gpt-ai-compose-footer {
+    padding-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
 .gpt-modal-footer {
     display: flex;
     justify-content: space-between;
@@ -135,14 +142,16 @@ label {
     background-color: hsl(6, 63%, 40%);
 }
 
-.gpt-save {
+.gpt-save,
+.gpt-ai-compose-save {
     color: white;
     background-color: hsl(222, 64%, 57%);
     color: white;
     background-color: hsl(222, 64%, 57%);
 }
 
-.gpt-save:hover {
+.gpt-save:hover,
+.gpt-ai-compose-save:hover {
     color: white;
     background-color: hsl(222, 64%, 45%);
     color: white;
@@ -150,10 +159,10 @@ label {
 }
 
 #gpt-loading {
-  height: 0.5rem;
-  margin-bottom: 1rem;
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
+    height: 0.5rem;
+    margin-bottom: 1rem;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .indeterminate-progress-bar {
@@ -190,7 +199,7 @@ label {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     border-radius: 12px;
-	width: 30%;
+    width: 30%;
 }
 
 .gpt-ai-compose-modal-body {

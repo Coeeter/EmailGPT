@@ -13,10 +13,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             response => sendResponse(response),
         )
     } else if (request.type === "generateEmail") {
-		generateEmail(request.userPrompt).then(response =>
-			sendResponse(response),
-		)
-	}
+        generateEmail(request.userPrompt).then(response =>
+            sendResponse(response),
+        )
+    }
     return true
 })
 
@@ -54,18 +54,18 @@ const composeEmail = async (subject: string, content: string, path: string) => {
 }
 
 const generateEmail = async (userPrompt: string) => {
-	try {
-		const response = await fetch("http://10.103.99.148:8080/compose-email", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ userPrompt }),
-		})
+    try {
+        const response = await fetch("http://localhost:8080/compose-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ userPrompt }),
+        })
 
-		const data = await response.json()
-		return data
-	} catch (error) {
-		console.error(error)
-	}
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error(error)
+    }
 }

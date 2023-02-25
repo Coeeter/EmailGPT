@@ -11,6 +11,11 @@
                         &times;
                     </button>
                 </div>
+				<div id="gpt-loading">
+					<div class="indeterminate-progress-bar">
+						<div class="indeterminate-progress-bar__progress"></div>
+					</div>
+				</div>
                 <div class="gpt-ai-compose-modal-body">
                     <label for="gpt-ai-compose-input"
                         >What is the email about?</label
@@ -21,7 +26,7 @@
                         rows="3"
                     ></textarea>
                 </div>
-                <div class="gpt-modal-footer">
+                <div class="gpt-ai-compose-footer">
                     <button class="gpt-modal-btn gpt-cancel" data-gpt-ai-close>
                         Cancel
                     </button>
@@ -43,6 +48,9 @@
     const aiComposeModal = document.getElementById(
         "gpt-ai-compose-modal",
     ) as HTMLDialogElement
+
+    const loading = aiComposeModal.querySelector("#gpt-loading")
+    loading.setAttribute("style", "opacity: 0;")
 
     const aiComposeSaveBtn = aiComposeModal.querySelector(
         ".gpt-ai-compose-save",
@@ -84,7 +92,7 @@
         const promptInput = document.querySelector(
             '[name="gpt-ai-compose-input"]',
         ) as HTMLTextAreaElement
-
+        loading.setAttribute("style", "opacity: 1;")
         chrome.runtime.sendMessage(
             {
                 type: "generateEmail",
@@ -94,6 +102,7 @@
                 const contentInput = document
                     .querySelector(".aoI")
                     .querySelector('div[role="textbox"]') as HTMLDivElement
+                loading.setAttribute("style", "opacity: 0;")
 
                 closeModal(aiComposeModal)
                 if (response && response?.content) {
