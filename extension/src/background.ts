@@ -22,7 +22,7 @@ const checkCurrentTab = async () => {
     if (!url.includes("mail.google.com")) return
     chrome.scripting.executeScript({
         target: { tabId: currentTab.id, allFrames: true },
-        files: ["content.js"],
+        files: ["content.js", "composeContent.js"],
     })
 }
 
