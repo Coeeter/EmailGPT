@@ -80,7 +80,7 @@ label {
     transition: border 0.15s ease-in-out;
 }
 
-.gpt-email-content:focus {
+.gpt-email-content:focus, .gpt-ai-compose-content:focus {
     border: 1px solid #3662d3;
     border: 1px solid #3662d3;
     outline: #3662d3;
@@ -216,6 +216,12 @@ label {
     font-weight: 500;
     border-radius: 16px;
     cursor: pointer;
+    border: none;
+    transition: all 0.15s ease-in-out;
+}
+
+.gpt-ai-compose:hover {
+    box-shadow: 0 1px 3px 0 rgb(60 64 67 / 30%), 0 4px 8px 3px rgb(60 64 67 / 15%);
 }
 
 .gpt-ai-compose-content {
