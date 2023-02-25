@@ -1,0 +1,17 @@
+{
+  "name": "extension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && copyfiles -f ./public/manifest.json ./dist/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "^0.0.217",
+    "copyfiles": "^2.4.1",
+    "typescript": "^4.9.5"
+  }
+}
