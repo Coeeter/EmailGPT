@@ -8,13 +8,16 @@
         <title>Document</title>
     </head>
     <body>
-        <dialog id="gpt-modal">
+        <dialog id="gpt-modal" open>
             <div class="gpt-modal-content">
                 <div class="gpt-modal-header">
                     <h2 class="gpt-modal-title">Review your changes</h2>
                     <button class="gpt-modal-btn" data-gpt-close>
                         &times;
                     </button>
+                </div>
+                <div class="indeterminate-progress-bar" id="loading">
+                    <div class="indeterminate-progress-bar__progress"></div>
                 </div>
                 <div class="gpt-modal-body">
                     <div class="gpt-body-item">
@@ -37,10 +40,22 @@
                     </div>
                 </div>
                 <div class="gpt-modal-footer">
-                    <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
-                        Cancel
-                    </button>
-                    <button class="gpt-modal-btn gpt-save">Save</button>
+                    <select
+                        name="options"
+                        id="options"
+                        class="gpt-email-content"
+                    >
+                        <option value="/enhance-email" selected>Default</option>
+                        <option value="/enhance-quirky">Quirky</option>
+                        <option value="/enhance-corporate">Corporate</option>
+                        <option value="/enhance-casual">Casual</option>
+                    </select>
+                    <div class="gpt-modal-footer-btns">
+                        <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
+                            Cancel
+                        </button>
+                        <button class="gpt-modal-btn gpt-save">Save</button>
+                    </div>
                 </div>
             </div>
         </dialog>

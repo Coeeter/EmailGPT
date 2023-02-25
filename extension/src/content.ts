@@ -2,46 +2,74 @@
     let isShown: Boolean = false
     let contentInput: HTMLElement
     let output: HTMLTextAreaElement
+    let data
     const modal = `
-        <dialog id="gpt-modal">
-            <div class="gpt-modal-content">
-                <div class="gpt-modal-header">
-                    <h2 class="gpt-modal-title">Review your changes</h2>
-                    <button class="gpt-modal-btn" data-gpt-close>
-                        &times;
-                    </button>
+    <dialog id="gpt-modal">
+        <div class="gpt-modal-content">
+            <div class="gpt-modal-header">
+                <h2 class="gpt-modal-title">Review your changes</h2>
+                <button class="gpt-modal-btn" data-gpt-close>
+                    &times;
+                </button>
+            </div>
+            <div id="gpt-loading">
+                <div class="indeterminate-progress-bar">
+                    <div class="indeterminate-progress-bar__progress"></div>
                 </div>
-                <div class="gpt-modal-body">
-                    <div class="gpt-body-item">
-						<label for="gpt-email-input">Original</label>	
-						<textarea
-							name="gpt-email-input"
-							class="gpt-email-content"
-							readonly
-							rows="20"
-						></textarea>
-					</div>
-                    <div class="gpt-body-item">
-						<label for="gpt-email-output">✨ Enhanced ✨</label>	
-						<textarea
-							name="gpt-email-output"
-							class="gpt-email-content"
-							rows="20"
-							placeholder="Loading..."
-						></textarea>
-					</div>
+            </div>
+            <div class="gpt-modal-body">
+                <div class="gpt-body-item">
+                    <label for="gpt-email-input">Original</label>
+                    <textarea
+                        name="gpt-email-input"
+                        class="gpt-email-content"
+                        readonly
+                        rows="20"
+                    ></textarea>
                 </div>
-                <div class="gpt-modal-footer">
+                <div class="gpt-body-item">
+                    <label for="gpt-email-output">✨ Enhanced ✨</label>
+                    <textarea
+                        name="gpt-email-output"
+                        class="gpt-email-content"
+                        rows="20"
+                        placeholder="Loading..."
+                    ></textarea>
+                </div>
+            </div>
+            <div class="gpt-modal-footer">
+                <select
+                    name="options"
+                    id="options"
+                    class="gpt-email-content"
+                >
+                    <option value="/enhance-email" selected>Default</option>
+                    <option value="/enhance-quirky">Quirky</option>
+                    <option value="/enhance-corporate">Corporate</option>
+                    <option value="/enhance-casual">Casual</option>
+                </select>
+                <div class="gpt-modal-footer-btns">
                     <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
                         Cancel
                     </button>
                     <button class="gpt-modal-btn gpt-save">Save</button>
                 </div>
             </div>
-        </dialog>
+        </div>
+    </dialog>
     `
     document.body.insertAdjacentHTML("beforeend", modal)
     const gptModal = document.getElementById("gpt-modal") as HTMLDialogElement
+    const select = gptModal.querySelector("select")
+    const loading = gptModal.querySelector("#gpt-loading") as HTMLElement
+    select.addEventListener("change", e => {
+        const target = e.target as HTMLSelectElement
+        data = {
+            ...data,
+            path: target.value,
+        }
+        makeRequest()
+    })
     document.querySelectorAll("[data-gpt-close]").forEach(el => {
         el.addEventListener("click", () => {
             closeModal(gptModal)
@@ -62,10 +90,15 @@
         const buttonRow = document.querySelectorAll(".btC")
 
         const button = `
-    <td>
-      <button class="email-gpt wG J-Z-I" style="margin-left: 12px;z-index:1 font-size: 20px">✨</button>
-    </td>
-    `
+        <td>
+            <button 
+                class="email-gpt wG J-Z-I" 
+                style="margin-left: 12px;z-index:1 font-size: 20px"
+            >
+            ✨
+            </button>
+        </td>
+        `
 
         buttonRow.forEach(row => {
             if (row.querySelector(".email-gpt")) return
@@ -96,10 +129,11 @@
                     'input[name="subjectbox"]',
                 ) as HTMLInputElement
 
-                const data = {
+                data = {
                     type: "enhanceEmail",
                     subject: subjectInput.value,
                     content: contentInput.innerText,
+                    path: "/enhance-email",
                 }
                 console.log(data)
 
@@ -110,17 +144,27 @@
 
                 gptModal.showModal()
                 isShown = true
-                chrome.runtime.sendMessage(data, response => {
-                    console.log(response)
-                    if (response && response?.content) {
-                        if (!isShown) return
-                        output.value = response.content.trim()
-                        return
-                    }
-                    alert("Something went wrong")
-                })
+                makeRequest()
             })
         })
+    }
+
+    function makeRequest() {
+        select.disabled = true
+        loading.setAttribute("style", "opacity: 1")
+        chrome.runtime.sendMessage(data, responseHandler)
+    }
+
+    function responseHandler(response: any) {
+        console.log(response)
+        select.disabled = false
+        loading.setAttribute("style", "opacity: 0")
+        if (response && response?.content) {
+            if (!isShown) return
+            output.value = response.content.trim()
+            return
+        }
+        alert("Something went wrong")
     }
 
     function closeModal(gptModal: HTMLDialogElement) {
@@ -128,6 +172,7 @@
         gptModal.querySelectorAll("textarea").forEach(el => {
             el.value = ""
         })
+        select.value = "/enhance-email"
         isShown = false
         document
             .querySelector(".gpt-save")
