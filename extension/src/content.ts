@@ -23,15 +23,33 @@
             if (row.querySelector(".email-gpt")) return
             row.querySelector(".gU.Up").insertAdjacentHTML("afterend", button)
             row.querySelector(".email-gpt").addEventListener("click", () => {
-                let parent = row.parentElement
+                let contentParent = row.parentElement
                 while (true) {
-                    parent = parent.parentElement
-                    if (parent.nodeName == "TBODY") break
+                    contentParent = contentParent.parentElement
+                    if (contentParent.nodeName == "TBODY") break
                 }
-                const inputElement = parent.querySelector(
+                const contentInput = contentParent.querySelector(
                     'div[role="textbox"]',
                 ) as HTMLElement
-                console.log(inputElement.innerText)
+
+                let subjectParent = contentInput.parentElement
+                while (true) {
+                    subjectParent = subjectParent.parentElement
+                    if (subjectParent.querySelector('form[method="POST"]'))
+                        break
+                }
+                const subjectInput = subjectParent.querySelector(
+                    'input[name="subjectbox"]',
+                ) as HTMLInputElement
+
+                const data = {
+                    subject: subjectInput.value,
+                    content: contentInput.innerText,
+                }
+                console.log(data);
+                chrome.runtime.sendMessage(data, response => {
+                    console.log(response)
+                })
             })
         })
     }
