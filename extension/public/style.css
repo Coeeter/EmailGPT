@@ -105,6 +105,20 @@ label {
     background-color: hsl(222, 64%, 45%);
 }
 
+#gpt-ai-compose-modal {
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    border-radius: 12px;
+	width: 30%;
+}
+
+.gpt-ai-compose-modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .gpt-ai-compose {
     background-color: hsl(222, 70%, 80%);
     height: 100%;
@@ -115,4 +129,10 @@ label {
     cursor: pointer;
 }
 
-
+.gpt-ai-compose-content {
+    padding: 8px;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    resize: none;
+    transition: border 0.15s ease-in-out;
+}
