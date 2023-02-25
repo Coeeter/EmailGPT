@@ -3,22 +3,22 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     border-radius: 12px;
-	width: 80%;
+    width: 80%;
 }
 
 dialog[open] {
-  -webkit-animation: show 150ms ease-out;
+    -webkit-animation: show 150ms ease-out;
 }
 
 @-webkit-keyframes show {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .gpt-modal-header {
@@ -33,75 +33,86 @@ dialog[open] {
 }
 
 .gpt-modal-body {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
 }
 
 .gpt-body-item {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 label {
-	margin-left: 4px;
+    margin-left: 4px;
 }
 
 .gpt-email-content {
-	padding: 8px;
+    padding: 8px;
     border-radius: 12px;
     border: 1px solid #e0e0e0;
     resize: none;
-	transition: border 0.15s ease-in-out;
+    transition: border 0.15s ease-in-out;
 }
 
 .gpt-email-content:focus {
-	border: 1px solid #3662d3;
+    border: 1px solid #3662d3;
     outline: #3662d3;
 }
 
 .gpt-email-content:read-only:focus {
-	border: 1px solid #e0e0e0;
+    border: 1px solid #e0e0e0;
 }
 
 .gpt-modal-footer {
-	display: flex;
-	justify-content: flex-end;
-	padding-top: 16px;
-	gap: 8px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 16px;
+    gap: 8px;
 }
 
 .gpt-modal-btn {
-	border: none;
-	border-radius: 4px;
-	padding: 8px 16px;
-	font-size: 14px;
-	cursor: pointer;
-	transition: background-color 0.15s ease-in-out;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .gpt-modal-btn:hover {
-	background-color: hsl(0, 0%, 80%);
+    background-color: hsl(0, 0%, 80%);
 }
 
 .gpt-cancel {
-	color: white;
-	background-color: hsl(6, 63%, 46%)
+    color: white;
+    background-color: hsl(6, 63%, 46%);
 }
 
 .gpt-cancel:hover {
-	color: white;
-	background-color: hsl(6, 63%, 40%)
+    color: white;
+    background-color: hsl(6, 63%, 40%);
 }
 
 .gpt-save {
-	color: white;
-	background-color: hsl(222, 64%, 57%);
+    color: white;
+    background-color: hsl(222, 64%, 57%);
 }
 
 .gpt-save:hover {
-	color: white;
-	background-color: hsl(222, 64%, 45%);
+    color: white;
+    background-color: hsl(222, 64%, 45%);
 }
+
+.gpt-ai-compose {
+    background-color: hsl(222, 70%, 80%);
+    height: 100%;
+    font-family: "Google Sans", Roboto, RobotoDraft, Helvetica, Arial,
+        sans-serif;
+    font-weight: 500;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
 
