@@ -7,7 +7,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     checkCurrentTab()
 })
 
-async function checkCurrentTab() {
+const checkCurrentTab = async () => {
     const currentTab = await getCurrentTab()
     const url = currentTab.url
     if (!url.includes("mail.google.com")) return
@@ -17,8 +17,26 @@ async function checkCurrentTab() {
     })
 }
 
-async function getCurrentTab() {
+const getCurrentTab = async () => {
     let queryOptions = { active: true, lastFocusedWindow: true }
     let [tab] = await chrome.tabs.query(queryOptions)
     return tab
+}
+
+
+const enhanceEmail = async (subject: string, content: string) => {
+    try {
+        const response = await fetch("http://localhost:8080/compose", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ subject, content }),
+        })
+
+        const data = await response.json()
+        return data
+    } catch (error) {
+        console.error(error)
+    }
 }
