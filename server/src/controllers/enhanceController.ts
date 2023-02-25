@@ -30,7 +30,7 @@ const enhanceReply = async (req: Request, res: Response) => {
             body.context
         }`
 
-        console.log("⚡Enhance Reply\n", prompt)
+        console.log("⚡Enhance Reply Prompt 🖊️\n", prompt)
 
         const completion = await promptGPT(prompt)
         res.status(200)
@@ -38,7 +38,6 @@ const enhanceReply = async (req: Request, res: Response) => {
             echo: body,
             content: completion.choices[0].text,
         })
-        console.log(completion)
     } catch {
         res.status(500).send("Error")
     }

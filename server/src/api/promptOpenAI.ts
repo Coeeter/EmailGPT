@@ -20,6 +20,9 @@ const promptGPT = async (prompt: string) => {
             frequency_penalty: 0,
             presence_penalty: 0,
         })
+        console.log(
+            `Tokens cost for this request💸\n=== \n💸Prompt Tokens: ${completion.data.usage.prompt_tokens}\n💸Completion Tokens: ${completion.data.usage.completion_tokens}\n💸Total Tokens: ${completion.data.usage.total_tokens}\n===`,
+        )
         return completion.data
     } catch (err) {
         console.log("Error Request ❌", err)
