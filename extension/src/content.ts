@@ -43,12 +43,18 @@
                 ) as HTMLInputElement
 
                 const data = {
+                    type: "enhanceEmail",
                     subject: subjectInput.value,
                     content: contentInput.innerText,
                 }
                 console.log(data);
                 chrome.runtime.sendMessage(data, response => {
                     console.log(response)
+                    if (response && response?.content) {
+                        contentInput.innerText = response.content.trim()
+                        return
+                    }
+                    alert("Something went wrong")
                 })
             })
         })
