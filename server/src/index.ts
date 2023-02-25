@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 })
 
 app.route("/enhance-email").post(enhanceController.enhanceEmail)
+app.route("/enhance-reply").post(enhanceController.enhanceReply)
 
 app.listen(8080, () => {
     console.log("Server started on http://localhost:8080")
