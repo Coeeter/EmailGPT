@@ -9,8 +9,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "enhanceEmail") {
-        enhanceEmail(request.subject, request.content).then(response =>
-            sendResponse(response),
+        composeEmail(request.subject, request.content, request.path).then(
+            response => sendResponse(response),
         )
     }
     return true
@@ -32,18 +32,15 @@ const getCurrentTab = async () => {
     return tab
 }
 
-const enhanceEmail = async (subject: string, content: string) => {
+const composeEmail = async (subject: string, content: string, path: string) => {
     try {
-        const response = await fetch(
-            "http://localhost:8080/enhance-email",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ subject, content }),
+        const response = await fetch(`http://localhost:8080${path}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
             },
-        )
+            body: JSON.stringify({ subject, content }),
+        })
 
         const data = await response.json()
         return data
