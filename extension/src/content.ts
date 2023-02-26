@@ -44,9 +44,9 @@
                     class="gpt-email-content"
                 >
                     <option value="/enhance-email" selected>Default</option>
-                    <option value="/enhance-quirky">Quirky</option>
                     <option value="/enhance-corporate">Corporate</option>
                     <option value="/enhance-casual">Casual</option>
+                    <option value="/enhance-quirky">Quirky</option>
                 </select>
                 <div class="gpt-modal-footer-btns">
                     <button class="gpt-modal-btn gpt-cancel" data-gpt-close>
