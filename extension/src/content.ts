@@ -129,7 +129,6 @@ const injectButton = () => {
                 content: contentInput.innerText,
                 path: "/enhance-email",
             }
-            console.log(data)
 
             const input = document.querySelector(
                 '[name="gpt-email-input"]',
@@ -146,19 +145,16 @@ const injectButton = () => {
 function makeRequest() {
     select.disabled = true
     gptLoading.setAttribute("style", "opacity: 1")
-    chrome.runtime.sendMessage(data, responseHandler)
-}
-
-function responseHandler(response: any) {
-    console.log(response)
-    select.disabled = false
-    gptLoading.setAttribute("style", "opacity: 0")
-    if (response && response?.content) {
-        if (!isShown) return
-        output.value = response.content.trim()
-        return
-    }
-    alert("Something went wrong")
+    chrome.runtime.sendMessage(data, response => {
+        select.disabled = false
+        gptLoading.setAttribute("style", "opacity: 0")
+        if (response && response?.content) {
+            if (!isShown) return
+            output.value = response.content.trim()
+            return
+        }
+        alert("Something went wrong")
+    })
 }
 
 function closeGTPModel(gptModal: HTMLDialogElement) {
