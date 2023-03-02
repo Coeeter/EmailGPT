@@ -74,6 +74,10 @@ document.querySelectorAll("[data-gpt-close]").forEach(el => {
         closeGTPModel(gptModal)
     })
 })
+document.querySelector(".gpt-save").addEventListener("click", () => {
+    contentInput.innerText = output.value.trim()
+    closeGTPModel(gptModal)
+})
 
 let mutationObserver = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
@@ -110,9 +114,6 @@ const injectButton = () => {
             output = document.querySelector(
                 '[name="gpt-email-output"]',
             ) as HTMLTextAreaElement
-            document
-                .querySelector(".gpt-save")
-                .addEventListener("click", saveEmail)
 
             let subjectParent = contentInput.parentElement
             while (true) {
@@ -164,12 +165,6 @@ function closeGTPModel(gptModal: HTMLDialogElement) {
     })
     select.value = "/enhance-email"
     isShown = false
-    document.querySelector(".gpt-save").removeEventListener("click", saveEmail)
-}
-
-const saveEmail = () => {
-    contentInput.innerText = output.value.trim()
-    closeGTPModel(gptModal)
 }
 
 mutationObserver.observe(document, { childList: true, subtree: true })

@@ -28,7 +28,7 @@ const modal = `
                     <button class="gpt-modal-btn gpt-cancel" data-gpt-ai-close>
                         Cancel
                     </button>
-                    <button class="gpt-modal-btn gpt-ai-compose-save">Save</button>
+                    <button class="gpt-modal-btn gpt-ai-compose-save">Compose</button>
                 </div>
             </div>
         </dialog>
