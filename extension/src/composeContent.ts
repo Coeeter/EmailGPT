@@ -1,6 +1,4 @@
-;(() => {
-    let composeButton: HTMLButtonElement
-    const modal = `
+const modal = `
 		<dialog id="gpt-ai-compose-modal">
             <div class="gpt-modal-content">
                 <div class="gpt-modal-header">
@@ -11,7 +9,7 @@
                         &times;
                     </button>
                 </div>
-				<div id="gpt-loading">
+				<div id="gpt-ai-loading">
 					<div class="indeterminate-progress-bar">
 						<div class="indeterminate-progress-bar__progress"></div>
 					</div>
@@ -35,82 +33,77 @@
             </div>
         </dialog>
 		`
-    if (!document.querySelector(".gpt-ai-compose")) {
-        document.body.insertAdjacentHTML("beforeend", modal)
-    }
+document.body.insertAdjacentHTML("beforeend", modal)
 
-    if (!composeButton) {
-        composeButton = document.querySelector(
-            ".T-I.T-I-KE.L3",
-        ) as HTMLButtonElement
-    }
+const aiComposeModal = document.getElementById(
+    "gpt-ai-compose-modal",
+) as HTMLDialogElement
 
-    const aiComposeModal = document.getElementById(
-        "gpt-ai-compose-modal",
-    ) as HTMLDialogElement
+const loading = aiComposeModal.querySelector("#gpt-ai-loading")
+loading.setAttribute("style", "opacity: 0;")
 
-    const loading = aiComposeModal.querySelector("#gpt-loading")
-    loading.setAttribute("style", "opacity: 0;")
+const aiComposeSaveBtn = aiComposeModal.querySelector(".gpt-ai-compose-save")
 
-    const aiComposeSaveBtn = aiComposeModal.querySelector(
-        ".gpt-ai-compose-save",
-    )
-
-    aiComposeSaveBtn.addEventListener("click", generateEmail)
-
-    aiComposeModal.querySelectorAll("[data-gpt-ai-close]").forEach(el => {
-        el.addEventListener("click", () => {
+aiComposeSaveBtn.addEventListener("click", () => {
+    const promptInput = document.querySelector(
+        '[name="gpt-ai-compose-input"]',
+    ) as HTMLTextAreaElement
+    loading.setAttribute("style", "opacity: 1;")
+    chrome.runtime.sendMessage(
+        {
+            type: "generateEmail",
+            userPrompt: promptInput.value,
+        },
+        response => {
+            const contentInput = document
+                .querySelector(".aoI")
+                .querySelector('div[role="textbox"]') as HTMLDivElement
+            loading.setAttribute("style", "opacity: 0;")
+            promptInput.value = ""
             closeModal(aiComposeModal)
-        })
+            if (response && response?.content) {
+                contentInput.innerHTML = response.content
+            } else {
+                alert("Something went wrong. Please try again.")
+            }
+        },
+    )
+})
+
+aiComposeModal.querySelectorAll("[data-gpt-ai-close]").forEach(el => {
+    el.addEventListener("click", () => {
+        closeModal(aiComposeModal)
     })
+})
+
+function checkForComposeButton() {
+    if (!document.querySelector(".T-I-KE")) return
+    if (document.querySelector(".gpt-ai-compose")) return
+    injectAiCompose()
+}
+
+function injectAiCompose() {
+    const composeButton = document.querySelector(".T-I-KE") as HTMLButtonElement
     if (!composeButton) return
     const composeRow = composeButton.parentElement
-
-    if (composeRow.querySelector(".gpt-ai-compose")) return
-
     composeRow.style.display = "flex"
     composeRow.style.gap = "4px"
     const AIComposeButton = `<button class="gpt-ai-compose" style="height: 100%">AI Compose</button>`
     composeRow.insertAdjacentHTML("beforeend", AIComposeButton)
-
     const AIComposeButtonElement = document.querySelector(
         ".gpt-ai-compose",
     ) as HTMLButtonElement
-
     AIComposeButtonElement.addEventListener("click", () => {
-        composeButton.click()
+        if (
+            !document.querySelector(".dw") ||
+            !document.querySelector(".dw").querySelector(".Ha")
+        )
+            composeButton.click()
         aiComposeModal.showModal()
     })
+}
 
-    function closeModal(gptModal: HTMLDialogElement) {
-        gptModal.querySelector(".gpt-ai-compose-content").innerHTML = ""
-        gptModal.close()
-        aiComposeSaveBtn.removeEventListener("click", generateEmail)
-    }
-
-    function generateEmail() {
-        const promptInput = document.querySelector(
-            '[name="gpt-ai-compose-input"]',
-        ) as HTMLTextAreaElement
-        loading.setAttribute("style", "opacity: 1;")
-        chrome.runtime.sendMessage(
-            {
-                type: "generateEmail",
-                userPrompt: promptInput.value,
-            },
-            response => {
-                const contentInput = document
-                    .querySelector(".aoI")
-                    .querySelector('div[role="textbox"]') as HTMLDivElement
-                loading.setAttribute("style", "opacity: 0;")
-
-                closeModal(aiComposeModal)
-                if (response && response?.content) {
-                    contentInput.innerHTML = response.content
-                } else {
-                    alert("Something went wrong. Please try again.")
-                }
-            },
-        )
-    }
-})()
+function closeModal(gptModal: HTMLDialogElement) {
+    gptModal.querySelector(".gpt-ai-compose-content").innerHTML = ""
+    gptModal.close()
+}

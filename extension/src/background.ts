@@ -1,12 +1,3 @@
-chrome.tabs.onActivated.addListener(async activeInfo => {
-    checkCurrentTab()
-})
-
-chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    if (changeInfo.status !== "complete") return
-    checkCurrentTab()
-})
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === "enhanceEmail") {
         composeEmail(request.subject, request.content, request.path).then(
@@ -19,22 +10,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
     return true
 })
-
-const checkCurrentTab = async () => {
-    const currentTab = await getCurrentTab()
-    const url = currentTab.url
-    if (!url.includes("mail.google.com")) return
-    chrome.scripting.executeScript({
-        target: { tabId: currentTab.id, allFrames: true },
-        files: ["content.js", "composeContent.js"],
-    })
-}
-
-const getCurrentTab = async () => {
-    let queryOptions = { active: true, lastFocusedWindow: true }
-    let [tab] = await chrome.tabs.query(queryOptions)
-    return tab
-}
 
 const composeEmail = async (subject: string, content: string, path: string) => {
     try {
