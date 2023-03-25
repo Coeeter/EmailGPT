@@ -19,7 +19,7 @@ We made this for IEEE NTU's [iNTUition v9.0](https://intuition.ieeentu.com/), wh
  * [OpenAI GPT-3.5 Model](https://platform.openai.com/docs/models/gpt-3-5)
  * [Express.JS](https://expressjs.com/)
   
-# Installation instructions (use at your own risk)
+## Installation instructions (use at your own risk)
 
 ### Server
 Grab your OpenAI key from [OpenAI's website](https://platform.openai.com/account/api-keys)
