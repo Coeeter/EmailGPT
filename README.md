@@ -1,5 +1,5 @@
 # EmailGPT
-![EmailGPT Banner](https://user-images.githubusercontent.com/57494734/227689833-c22abe79-6c0a-407d-9478-5209d0b05070.png)
+![Group 37](https://user-images.githubusercontent.com/79391172/227707181-f482c411-64e2-4614-afa7-ee2f1edf326a.png)
 
 **EmailGPT** is a Google Chrome extension to use OpenAI's GPT-3.5 model's API to assist the user in writing emails inside Gmail.
 
