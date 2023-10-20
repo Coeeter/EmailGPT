@@ -1,18 +1,18 @@
 # EmailGPT
 ![Group 37](https://user-images.githubusercontent.com/79391172/227707181-f482c411-64e2-4614-afa7-ee2f1edf326a.png)
 
-**EmailGPT** is a Google Chrome extension to use OpenAI's GPT-3.5 model's API to assist the user in writing emails inside Gmail.
+**EmailGPT** is a Google Chrome extension to assist the user in writing emails inside Gmail using OpenAI's GPT-3.5 model.
 
 What the extension can do:
  * AI generate an email based off a prompt
- * Enhance email and reply drafts with multiple flavours
-    * Default: Normal enhancement
-    * Corporate: Formal enhancement
-    * Casual: Informal enhancement
-    * Quirky: Speak like a zoomer (pls only use with your friends)
- * Automatically correct any spelling or grammar errors in the email
+ * Enhance your emails and replies with multiple AI personalities
+    * Default: Professional yet Approachable
+    * Corporate: Formal and Polished
+    * Casual: Informal and Friendly
+    * Quirky: Zoomer mode (pls only use with your friends)
+ * Automatically fix any spelling or grammatical errors in your emails
 
-We made this for IEEE NTU's [iNTUition v9.0](https://intuition.ieeentu.com/), where we on the [**Best Pre-University Hack**](https://devpost.com/software/emailgpt).
+We made this for IEEE NTU's [iNTUition v9.0](https://intuition.ieeentu.com/), where we won the [**Best Pre-University Hack**](https://devpost.com/software/emailgpt).
 
 ## Built using:
  * [Google Chrome Extension API](https://developer.chrome.com/docs/extensions/reference/)
